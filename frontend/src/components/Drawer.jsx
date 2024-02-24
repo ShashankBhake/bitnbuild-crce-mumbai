@@ -26,7 +26,7 @@ function DrawerExample() {
     const sidebarElements1 = [{ component: 'Home', path: '/' }, { component: 'Inventory', path: '/inventory' }, { component: 'Sales', path: '/sales' }]
     return (
         <>
-            <Box padding={4}>
+            <Box padding={4}   >
                 <MdMenu size={30} ref={btnRef} cursor={'pointer'} colorscheme='teal' onClick={onOpen} />
             </Box>            <Drawer
                 isOpen={isOpen}
