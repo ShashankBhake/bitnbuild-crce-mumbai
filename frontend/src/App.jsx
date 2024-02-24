@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DrawerExample from './components/Drawer';
-import { BrowserRouter, Routes, Route, Router } from 'react-router-dom'
+import Flipcard from './login';
 import Home from './pages/Home';
-
 function App() {
   const isDarkMode = useSelector((state) => state.ui.isDarkMode);
 
@@ -16,6 +16,7 @@ function App() {
         <DrawerExample />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path={'/login'} element={<Flipcard />} />
         </Routes>
       </BrowserRouter>
     
