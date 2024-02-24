@@ -1,0 +1,174 @@
+/* Tailwind CSS with gaming theme */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2d2d2d; /* Dark grey background */
+    color: #fff; /* White text */
+    min-height: 100vh; /* Minimum height of the viewport */
+  }
+  
+  .switch {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .card-side::before,
+  .card-side::after {
+    position: absolute;
+    content: '';
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .card-side::before {
+    left: 0;
+    top: 0;
+    content: 'Log in';
+  }
+  
+  .card-side::after {
+    right: 0;
+    top: 0;
+    content: 'Sign up';
+  }
+  
+  .toggle {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border: 2px solid #a29b9b;  /* Dark grey border */
+    border-radius: 9999px; /* Rounded shape */
+    transition: background-color 0.3s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 2px solid #a29b9b; /* Dark grey border */
+    border-radius: 9999px; /* Rounded shape */
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    transition: transform 0.3s;
+  }
+  
+  .toggle:checked + .slider {
+    background-color: #a29b9b; /* Dark grey background when checked */
+  }
+  
+  .toggle:checked + .slider:before {
+    transform: translateX(30px);
+  }
+  
+  .toggle:checked ~ .card-side:before {
+    text-decoration: none;
+  }
+  
+  .toggle:checked ~ .card-side:after {
+    text-decoration: underline;
+  }
+  
+  .flip-card__inner {
+    position: absolute;
+    width: 300px;
+    height: 350px;
+    background-color: transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+    /* Dark shadow */
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  .toggle:checked ~ .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card__front,
+  .flip-card__back {
+    position: absolute;
+    padding: 20px;
+    border: 2px solid #a29b9b;  /* Dark grey border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #a29b9b;  /* Dark grey background */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Dark shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    backface-visibility: hidden;
+  }
+  
+  .flip-card__back {
+    width: 100%;
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .title {
+    margin-bottom: 20px;
+    font-size: 25px;
+    font-weight: 900;
+    text-align: center;
+  }
+  
+  .flip-card__input {
+    width: 16rem; /* Equivalent to w-64 */
+    height: 4rem; /* Equivalent to h-16 */
+    border-radius: 0.375rem; /* Equivalent to rounded-lg */
+    border-width: 2px; /* Equivalent to border-2 */
+    border-color: #2d2d2d; /* Equivalent to border-gray-800 */
+    background-color: #fff; /* Equivalent to bg-white */
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3); /* Equivalent to shadow-md */
+    color: #323232; /* Equivalent to text-gray-800 */
+    padding: 0.5rem 1rem; /* Equivalent to px-4 py-2 */
+  }
+  
+  .flip-card__input::placeholder {
+    color: #999999; /* Equivalent to text-gray-500 */
+    opacity: 0.75; /* Equivalent to opacity-75 */
+  }
+  
+  .flip-card__input:focus {
+    border-color: #2d8cf0; /* Equivalent to border-blue-500 */
+  }
+  
+  .flip-card__btn:active,
+  .button-confirm:active {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Dark shadow when active */
+    transform: translate(3px, 3px);
+  }
+  
+  .flip-card__btn {
+    margin-bottom: 20px;
+    width: 120px;
+    height: 35px;
+    border-radius: 5px;
+    border: 2px solid #555; /* Dark grey border */
+    background-color: #fff;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Dark shadow */
+    font-size: 17px;
+    font-weight: 600;
+    color: #555; /* Dark grey text */
+    cursor: pointer;
+  }
