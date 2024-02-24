@@ -1,18 +1,20 @@
-import { useState } from 'react'
-
-
-// import './App.css'
+import { useSelector } from 'react-redux';
+import DrawerExample from './components/Drawer';
 
 function App() {
-
+  const isDarkMode = useSelector((state) => state.ui.isDarkMode);
 
   return (
-    <>
-      <h1 className="text-3xl font-bold text-red-500 underline">
-        Inventory management
-      </h1>
-    </>
-  )
+
+
+    <div className="">
+
+      {/* <ColorSwitcher /> */}
+    <DrawerExample/>
+      <h1 className={`${isDarkMode ? "bg-red-100" : ""} `}>Hello</h1>
+    </div>
+
+  );
 }
 
-export default App
+export default App;
