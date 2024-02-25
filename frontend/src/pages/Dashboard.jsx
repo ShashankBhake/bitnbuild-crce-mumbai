@@ -1,11 +1,12 @@
+
 import { Box, Center, Container, Divider, HStack, Spinner, Text, VStack, useColorMode } from '@chakra-ui/react'
 import { CiCircleCheck } from "react-icons/ci";
-
 import React, { useState } from 'react'
 
 
-import {Chart, ArcElement, Tooltip, Legend, Title} from 'chart.js';
-import {Doughnut} from 'react-chartjs-2';
+
+import { ArcElement, Chart, Legend, Title, Tooltip } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
 Chart.register(ArcElement, Tooltip, Legend, Title);
 Chart.defaults.plugins.tooltip.backgroundColor = 'rgb(0, 0, 156)';
@@ -17,18 +18,18 @@ Chart.defaults.plugins.legend.title.font = 'Helvetica Neue';
 const data = {
     labels: [
         'All',
-      'Active',
+        'Active',
     ],
     datasets: [{
-      data: [60,40],
-      backgroundColor: [
-        '#4ecaaf',
-        '#efefef'
-      ],
-      borderWidth: 0,
-      radius: '60%'   
+        data: [60, 40],
+        backgroundColor: [
+            '#4ecaaf',
+            '#efefef'
+        ],
+        borderWidth: 0,
+        radius: '60%'
     }]
-  };
+};
 
 const Dashboard = () => {
     const salesActivity = [
@@ -72,6 +73,7 @@ const [loading, setLoading] = useState(false)
     ];
 
     const { colorMode } = useColorMode();
+    console.log(colorMode)
     const bgColor = { light: 'white', dark: 'gray.800' };
     const borderColor = { light: '#ebeaf2', dark: '#2d3748' };
     const textColor = { light: '#777777', dark: 'white' };
@@ -94,17 +96,16 @@ const [loading, setLoading] = useState(false)
             (
                 <Container p={5} maxW={'100vw'} width={'100%'} height={'100vh'}>
             <Text fontSize='4xl' fontWeight={'bold'} mb={4} color={textColor[colorMode]}  >Dashboard</Text>
-
             <VStack w={'100%'} p={2} spacing={10} alignItems="stretch">
                 <HStack spacing={10} justifyContent={'center'} >
                     <Box
                         w={'55%'}
                         borderRadius="xl"
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'x1', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
                         boxShadow="md"
+                        sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
                         border={`1px solid ${borderColor[colorMode]}`}
-
-
                     >
                         <VStack w={'100%'} spacing={4}  >
                             <Text
@@ -131,10 +132,9 @@ const [loading, setLoading] = useState(false)
                                             </Text>
                                         </VStack>
                                         <HStack spacing={'5px'} ><CiCircleCheck />
+                                        
                                             <Text color={textColor[colorMode]} >{item.status.toUpperCase()}</Text></HStack>
-
                                     </VStack>
-
                                 ))}
 
                             </HStack>
@@ -145,8 +145,12 @@ const [loading, setLoading] = useState(false)
                     <Box w={'30%'}
                         borderRadius="xl"
                         boxShadow="md"
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'x1', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
+                        
+                        sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
                         border={`1px solid ${borderColor[colorMode]}`} >
+
 
                         <Text
                             p={2}
@@ -157,7 +161,6 @@ const [loading, setLoading] = useState(false)
                             textAlign={'start'}
                             borderTopRadius="xl"
                             border="1px solid #ebeaf2"
-
                         >
                             Inventory Summary
                         </Text>
@@ -179,11 +182,14 @@ const [loading, setLoading] = useState(false)
                     </Box>
                 </HStack>
 
-                <HStack spacing={'280px'} justifyContent={'center'}  >
+                <HStack spacing={'190px'} justifyContent={'center'}  >
                     <Box
                         w={'55%'}
                         borderRadius="xl"
                         boxShadow="md"
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'xl', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
+                        
+                        sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
                         border={`1px solid ${borderColor[colorMode]}`}
                     >
@@ -197,7 +203,6 @@ const [loading, setLoading] = useState(false)
                                 textAlign={'start'}
                                 borderTopRadius="xl"
                                 border="1px solid #ebeaf2"
-
                             >
                                 Product Details
                             </Text>
@@ -212,16 +217,9 @@ const [loading, setLoading] = useState(false)
                                         </HStack>
 
                                     ))}
-
-
-
                                 </VStack>
-
-
-                                <Divider  orientation='vertical' height={'150px'} />
-
-
-                                <VStack w={'100%'}  justifyContent={'space-between'}  >
+                                <Divider orientation='vertical' height={'150px'} />
+                                <VStack w={'100%'} justifyContent={'space-between'}  >
                                     <Doughnut data={data} />
 
                                 </VStack>
@@ -232,6 +230,9 @@ const [loading, setLoading] = useState(false)
                     <Box
                         borderRadius="xl"
                         boxShadow="md"
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'xl', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
+                        
+                        sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
                         border={`1px solid ${borderColor[colorMode]}`} >
 

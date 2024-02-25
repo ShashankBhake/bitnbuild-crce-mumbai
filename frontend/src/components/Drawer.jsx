@@ -25,7 +25,7 @@ function DrawerExample() {
     const btnRef = React.useRef()
 
     const sidebarElements = ['Home', 'Inventory', 'Sales']
-    const sidebarElements1 = [{ component: 'Home', path: '/' }, { component: 'Inventory', path: '/inventory' }, { component: 'Sales', path: '/sales' }, { component: 'Vendors', path: '/vendors' }, { component: 'Dashboard', path: '/dashboard' }, { component: 'Document Summarizer', path: '/fileupload' } ]
+    const sidebarElements1 = [{ component: 'Home', path: '/' }, { component: 'Inventory', path: '/inventory' }, { component: 'Sales', path: '/sales' }, { component: 'Vendors', path: '/vendors' }, { component: 'Dashboard', path: '/dashboard' }, { component: 'Document Summarizer', path: '/fileupload' }]
     return (
         <>
             <Box padding={4}   >
@@ -69,7 +69,6 @@ function DrawerExample() {
                         <Button variant='outline' mr={3} onClick={onClose}>
                             Cancel
                         </Button>
-                        <Button colorscheme='blue'>Save</Button>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>

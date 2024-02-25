@@ -1,19 +1,18 @@
-import React from 'react'
-import { useReactTable, flexRender, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
-import itemsData from '../utils/items.json'
-import { columnDef } from '../utils/columns'
 import {
+    Container,
     Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
     TableCaption,
     TableContainer,
-    Container,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr
 } from '@chakra-ui/react'
+import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
+import React from 'react'
+import { columnDef } from '../utils/columns'
+import itemsData from '../utils/items.json'
 const TableComponent = () => {
 
     const finalData = React.useMemo(() => {
@@ -41,7 +40,7 @@ const TableComponent = () => {
                 <Table variant='striped' colorScheme='gray' >
                     <TableCaption>Items Data</TableCaption>
 
-                    <Thead backgroundColor={'#67f0b7'}  >
+                    <Thead backgroundColor={'#666'}  >
                         {
                             tableInstance.getHeaderGroups().map((headerEl) => {
                                 return <Tr key={headerEl.id} >

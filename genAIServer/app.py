@@ -4,8 +4,8 @@ app = Flask(__name__)
 from flask_cors import CORS, cross_origin
 
 CORS(app)
-
-
+# gcloud auth print-access-token
+TOKEN = 'ya29.a0AfB_byBy3pwByfKzCuDD0Zs0V9OwPteUgvukZZIslRqmftcTiAotarSEcFOrdLEURoQBcA_SdMc_zDP11pf9mns0P91_X6iniJhFX2lHj4_Kq8xJ3qnXQSoQjuSZ0PLevF3MRLM8Qy1SaG_mJBzI_KY7AMzEbG7UnbFjqENZ0QaCgYKAdwSARASFQHGX2MiustRIxuvFbt_wlbV-GeD9g0177'
 
 @app.route("/")
 def main():
@@ -38,6 +38,27 @@ def upload():
         print(e)
         return str(e)
     
+@app.route('/query', methods=['POST'])
+def query():
+    try:
+        # Get the text from the POST request
+        import json
+
+        data = json.loads(request.get_data())
+        text = data.get('text') 
+
+
+        data = process_company_data(
+            file_path = text,
+        )
+
+        print(data)
+        return data
+
+    except Exception as e:
+        print(e)
+        return str(e)
+
 
 # Copyright 2020 Google LLC
 #
@@ -150,7 +171,7 @@ def process_document_sample(
     print("{\n  \"contents\": {\n    \"role\": \"user\",\n    \"parts\": {\n        \"text\": \"Give me a recipe for banana bread.\"\n    },\n  },\n  \"safety_settings\": {\n    \"category\": \"HARM_CATEGORY_SEXUALLY_EXPLICIT\",\n    \"threshold\": \"BLOCK_LOW_AND_ABOVE\"\n  },\n  \"generation_config\": {\n    \"temperature\": 0.2,\n    \"topP\": 0.8,\n    \"topK\": 40\n  }\n}")
     #CHANGE HERE  $(gcloud auth print-access-token) 
     headers = {
-    'Authorization': 'Bearer ya29.a0AfB_byB1EyA4lFEXtKPCxhxM8-I6xGftd4HV-PVix90WccFb1DtigMNC88f3FE8ARAudiCJ_Xiz5hGnihWfQnE8IbT6ODTs8CS6MRwovSL7-M6EvhsKz2Iidt-zNtz7Hl9cNwo0-YK_CAXx8yU3EY7LU2hCIVskKukU2t4PtpwaCgYKAaESARASFQHGX2Mi0JWr1MKilH_7bIDjN5Nqow0177',
+    'Authorization': 'Bearer ' + TOKEN,
     'Content-Type': 'application/json; charset=utf-8'
     }
     print("WOWOWOWOWO")
@@ -191,6 +212,60 @@ def process_document_sample(
 # [END documentai_process_document_processor_version]
 # [END documentai_process_document]
         
+def process_company_data(
+    file_path: str,
+) -> None:
+    # You must set the `api_endpoint` if you use a location other than "us".
+    prompt = file_path
+    # prompt = "write a poem in nicely spaced format with cute emojis"
+    import requests
+    import json
+    url = "https://us-central1-aiplatform.googleapis.com/v1/projects/quick-yen-415315/locations/us-central1/publishers/google/models/gemini-1.0-pro-vision:streamGenerateContent"
+
+    payload = "{\n  \"contents\": {\n    \"role\": \"user\",\n    \"parts\": {\n        \"text\": \"" + prompt + "\"\n    },\n  },\n  \"safety_settings\": {\n    \"category\": \"HARM_CATEGORY_SEXUALLY_EXPLICIT\",\n    \"threshold\": \"BLOCK_LOW_AND_ABOVE\"\n  },\n  \"generation_config\": {\n    \"temperature\": 0.2,\n    \"topP\": 0.8,\n    \"topK\": 40\n  }\n}"
+    print(payload)
+    print()
+    print("lol")
+    print("{\n  \"contents\": {\n    \"role\": \"user\",\n    \"parts\": {\n        \"text\": \"Give me a recipe for banana bread.\"\n    },\n  },\n  \"safety_settings\": {\n    \"category\": \"HARM_CATEGORY_SEXUALLY_EXPLICIT\",\n    \"threshold\": \"BLOCK_LOW_AND_ABOVE\"\n  },\n  \"generation_config\": {\n    \"temperature\": 0.2,\n    \"topP\": 0.8,\n    \"topK\": 40\n  }\n}")
+    #CHANGE HERE  $(gcloud auth print-access-token) 
+    headers = {
+    'Authorization': 'Bearer ' + TOKEN,
+    'Content-Type': 'application/json; charset=utf-8'
+    }
+    print("WOWOWOWOW2O22")
+
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    response_json = json.loads(response.text)
+    print(response_json)
+    l = []
+    for i in response_json:
+        # print(i['candidates'])
+        l.append(i['candidates'][0]['content']['parts'][0]['text'])
+    return "".join(l)
+
+    #file upload data
+    # Assuming 'binary_content' is the binary data of the file content
+    # file = {'file': ('filename', binary_content)}
+
+    response = requests.request("POST", url, headers=headers, files=file)
+
+    # print(response.text)
+    # final = ""
+    response_json = json.loads(response.text)
+    # Use response_json as a JSON object
+    # For example:
+    l = []
+    for i in response_json:
+        # print(i['candidates'])
+        l.append(i['candidates'][0]['content']['parts'][0]['text'])
+    return "".join(l)
+
+
+    # Read the text recognition output from the processor
+    print("The document contains the following text:")
+    # print(document.text)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
