@@ -5,6 +5,7 @@ var logger = require('../utils/logger').getLoggerByName('API LOGGER')
 const visitorCount = require('../db/models/count').visitorCount
 var cors = require('cors')
 const userModel = require('../db/models/user')
+const axios = require('axios')
 
 // var allowlist = ['http://localhost:5173/', 'https://mscs.vercel.app/']
 // var corsOptionsDelegate = function (req, callback) {
@@ -21,6 +22,71 @@ const userModel = require('../db/models/user')
 const test = (req, res, next) => {
     next()
 }
+
+
+
+const myHeaders = new Headers();
+
+myHeaders.append("Authorization", "Bearer ya29.a0AfB_byBk2QV8ATPsPK-GTWVQ88zJuoiSY-FmMIKZP-wFNBuqF9Wrdl2tEVS5ZhHCjYgHcD2-BTvD7ct9rBBnhJm4fQ2wXFv-NWXdq6RMY10_rBwJ6JAUXp62VszpioneBPYNM9MfEV8AgwqOfRsdapecOtptSPpZO-IJFhvg4ElNNlN9jfSMC_Z_07LlyM6mdokskzUR6DfQ5KlDRj2CnETxnnw-TIs_zKtTQTrEQJmMFAiXf-RLVJa7kJStMNXtcgQpwaBYCpAjWqvFRfBSXDvzJjkXRcaLkxGCD5jspmpSdfHKbk2YtjdoCrgQqGQF2UvW4kFC3knyGgxkVKQsV7YrG4kow2o5LLfEkXaSbwocROY2mkLEdItZ9VFYlRyeFk3_VOdRbS5vuvyOLyfU1Vz4asNjj58aCgYKAdcSARASFQHGX2MidOHGscLxkBEInyw51pYfXQ0422");
+myHeaders.append("Content-Type", "application/json; charset=utf-8");
+
+
+
+router.post('/image/summarize', async (req, res) => {
+    try {
+        const { image } = req.body;
+
+        const raw = {
+            "instances": [
+              {
+                "image": {
+                    "bytesBase64Encoded": image
+                }
+              }
+            ],
+            "parameters": {
+              "sampleCount": 1,
+              "language": "en"
+            }
+          };
+
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
+
+        const { response } =  await axios.post("https://asia-southeast1-aiplatform.googleapis.com/v1/projects/quiet-subset-415315/locations/asia-southeast1/publishers/google/models/imagetext:predict", requestOptions)
+        // fetch("https://asia-southeast1-aiplatform.googleapis.com/v1/projects/quiet-subset-415315/locations/asia-southeast1/publishers/google/models/imagetext:predict", requestOptions)
+        //     .then((response) => {
+        //         return res.status(200).json({
+        //             message: "Success",
+        //             code: "SUCCESS",
+        //             data: response.text()
+        //         });
+        //     })
+        //     .then((result) => console.log(result))
+        //     .catch((error) => console.error(error));
+        console.log(response);
+        return res.status(200).json({
+            message: "Success",
+            code: "SUCCESS",
+            data: response.text()
+        });
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            message: "Server Error",
+            code: "FAIL",
+            error: err
+        })
+    }
+});
+
+
 // ,cors(corsOptionsDelegate)
 router.get('/', test, async (req, res) => {
     return res.status(200).json({
@@ -29,7 +95,7 @@ router.get('/', test, async (req, res) => {
 })
 
 router.post('/user/register', test, async (req, res) => {
-    try{
+    try {
         const { username, password, employeeCode, role } = req.body
         const user = await userModel.create({
             username, password, employeeCode, role
@@ -41,7 +107,7 @@ router.post('/user/register', test, async (req, res) => {
             data: user
         })
     }
-    catch(err){
+    catch (err) {
         return res.status(500).json({
             message: "Server Error",
             code: "FAIL",

@@ -11,7 +11,7 @@ const apiRouter = require('./router/api');
 
 const bodyParser = require('body-parser');
 
-console.log("SETTING LOG LEVEL TO " + process.env.LOG_LEVEL);
+console.log("SETTING LOG LEVEL TO " + process.env.LOG_LEVEL ?? 'info');
 logger.info("Logger Loaded Successfully");
 dbconnect.connect(true);
 
