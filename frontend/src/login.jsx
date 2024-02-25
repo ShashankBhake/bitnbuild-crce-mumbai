@@ -32,8 +32,8 @@ function FlipCard() {
           <span className="slider"></span>
           <span className="card-side"></span>
           <div className="flip-card__inner">
-            <div className={`flip-card__front ${isSignUp ? 'hidden' : ''}`}>
-              <div className="title">Log in</div>
+            <div  className={`flip-card__front ${isSignUp ? 'hidden' : ''}`}>
+              <div style={{ fontFamily : 'myfont'}} className="title">Log in</div>
               <form className="flip-card__form" action="">
                 <input className="flip-card__input" name="email" placeholder="Email" type="email" />
                 <input className="flip-card__input" name="password" placeholder="Password" type="password" />
@@ -41,7 +41,7 @@ function FlipCard() {
               </form>
             </div>
             <div className={`flip-card__back ${isSignUp ? '' : 'hidden'}`}>
-              <div className="title">Sign up</div>
+              <div style={{ fontFamily : 'myfont'}} className="title">Sign up</div>
               <form className="flip-card__form" action="">
                 <input className="flip-card__input" placeholder="Name" type="text" />
                 <input className="flip-card__input" name="email" placeholder="Email" type="email" />
