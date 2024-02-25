@@ -1,10 +1,10 @@
-import { Box, Center, Container, Divider, HStack, Text, VStack, useColorMode } from '@chakra-ui/react'
+import { Box, Container, Divider, HStack, Text, VStack, useColorMode } from '@chakra-ui/react';
 import { CiCircleCheck } from "react-icons/ci";
 
-import React from 'react'
+import React from 'react';
 
 
-import { Chart, ArcElement, Tooltip, Legend, Title } from 'chart.js';
+import { ArcElement, Chart, Legend, Title, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
 Chart.register(ArcElement, Tooltip, Legend, Title);
@@ -85,7 +85,7 @@ const Dashboard = () => {
                     <Box
                         w={'55%'}
                         borderRadius="xl"
-                        _hover={{ backgroundColor: colorMode === 'light' ? 'grey' : 'green', boxShadow: 'xl', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'x1', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
                         boxShadow="md"
                         sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
@@ -129,7 +129,7 @@ const Dashboard = () => {
                     <Box w={'30%'}
                         borderRadius="xl"
                         boxShadow="md"
-                        _hover={{ backgroundColor: colorMode === 'light' ? 'grey' : 'green', boxShadow: 'xl', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'x1', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
                         
                         sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
@@ -171,7 +171,7 @@ const Dashboard = () => {
                         w={'55%'}
                         borderRadius="xl"
                         boxShadow="md"
-                        _hover={{ backgroundColor: colorMode === 'light' ? 'grey' : 'green', boxShadow: 'xl', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'xl', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
                         
                         sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
@@ -214,6 +214,9 @@ const Dashboard = () => {
                     <Box
                         borderRadius="xl"
                         boxShadow="md"
+                        _hover={{ backgroundColor: colorMode === 'light' ? 'white' : '#0b6285', boxShadow: 'xl', cursor: 'pointer', transform: 'scale(1.2)', transition: 'all 1.1s' }}
+                        
+                        sx={{ transition: 'all 0.3s' }}
                         backgroundColor={bgColor[colorMode]}
                         border={`1px solid ${borderColor[colorMode]}`} >
 
