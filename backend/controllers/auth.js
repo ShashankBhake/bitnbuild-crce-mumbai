@@ -1,132 +1,77 @@
-export const logout = async (req,res) => {
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.js';
+
+export const register = async (req, res) => {
+    const { username, email, password, role } = req.body;
+
     try {
-        const { token } = req.body
-        const userId = req.user.id
-        for (let i of Object.keys(req.cookies)) {
-            res.clearCookie(i)
+        const findUser = await User.findOne({ email });
+        if (findUser) {
+            return res.status(400).json({ message: "User already exists" });
         }
-        return res.status(200).json({
-            status: "success",
-            message: "User logged out successfully",
-        })
-    } catch (error) {
-        logger.error(error)
-        return res.status(400).json({
-            status: "error",
-            message: "Something went wrong",
-        })
+
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+
+        const user = new User({
+            username,
+            email,
+            password: hash,
+            role
+        });
+
+        await user.save();
+
+        // Return only necessary information
+        res.status(200).json({
+            message: 'User registered successfully',
+            userId: user._id
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Error registering user',
+            error: err.message
+        });
     }
 }
-
-
-export const createSendTokenSql = async (user, statusCode, res, firstLogin) => {
-    try {
-
-
-        const token = signToken(user.id, user.role, user.avatar, user.updatedUsername, user.firstName);
-
-
-        const cookieOptions = {
-            expires: new Date(
-                Date.now() + (parseInt(config.JWT_COOKIE_EXPIRES_IN)) * 24 * 60 * 60 * 1000
-            ),
-            httpOnly: true,
-        };
-
-
-        res.cookie("jwt", token, cookieOptions);
-
-        user.password = undefined;
-        user.tokens = undefined;
-
-        res.status(statusCode).json({
-            status: "success",
-            token,
-            firstLogin,
-            data: {
-                user,
-            },
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({
-            status: "error",
-            error,
-        });
-    }
-};
-
-
 
 export const login = async (req, res) => {
+    const { username, password } = req.body;
+
     try {
-        const { email , password } = req.body
-
-
-
-        const user = await User.findOne({
-            where: {
-                email
-            }
-        })
-
-
-        if (user) {
-            logger.info("User already exists")
-
-        } else {
-            
-            logger.info("User does not exist, creating new user")
-
-            let newUsername = email.split("@")[0].toLowerCase();
-
-            let ifUsernameExists = await User.findOne({
-                where: {
-                    userName: newUsername
-                }
-            })
-
-            if (ifUsernameExists) {
-                newUsername = newUsername + "-" + randomUUID().slice(4, 10)
-                const newUser = User.create({
-                    firstName: name,
-                    email,
-                    role: UserRole.STUDENT,
-                    userName: newUsername,
-                    emailVerified: email_verified,
-                    avatar: picture,
-                    provider: Provider.GOOGLE,
-                    lastLoginDate: new Date(),
-                })
-
-                const nUser = await newUser.save()
-
-                logger.info("New user created")
-                createSendTokenSql(nUser, 201, res, true)
-            } else {
-                const newUser = User.create({
-                    firstName: name,
-                    email,
-                    role: UserRole.STUDENT,
-                    userName: newUsername,
-                    emailVerified: email_verified,
-                    avatar: picture,
-                    provider: Provider.GOOGLE,
-                    lastLoginDate: new Date(),
-                })
-
-                const nUser = await newUser.save()
-
-                logger.info("New user created")
-                createSendTokenSql(nUser, 201, res, true)
-            }
+        const findUser = await User.findOne({ username });
+        if (!findUser) {
+            return res.status(400).json({ message: "User not found" });
         }
-    } catch (error) {
-        logger.error(error)
-        res.status(400).json({
-            status: "error",
-            message: "Something went wrong",
-        })
+
+        if (!bcrypt.compareSync(password, findUser.password)) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        const payloadData = {
+            userId: findUser._id,
+            email: findUser.username
+            // Add any other necessary data to the payload
+        }
+
+        const token = jwt.sign(payloadData, process.env.JWT_SECRET, {
+            expiresIn: "365d"
+        });
+
+        res.status(200).json({
+            message: "Logged In",
+            access_token: token,
+            userId: findUser._id
+            // Add any other necessary data to the response
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Error logging in',
+            error: err.message
+        });
     }
 }
-
