@@ -6,10 +6,10 @@ const Home = () => {
     return (
         <HStack spacing={8} alignItems="center" justifyContent={'center'}>
             <VStack>
-            <Text fontSize="3xl" fontWeight="bold" textAlign="center">Inventory Management System</Text>
-            <Text fontSize="lg" color="gray.600" textAlign="center">Efficiently organize, track, and manage your inventory</Text>
+            <Text fontSize="4xl" fontFamily={'myfont'} fontWeight="bold" textAlign="center">Inventory Management System</Text>
+            <Text fontSize="lg" fontFamily={'myfont'}  color="gray.600" textAlign="center">Efficiently organize, track, and manage your inventory</Text>
             </VStack>
-            <Image src={img} />
+            <Image src={img} width={650} />
         </HStack>
     );
 };
