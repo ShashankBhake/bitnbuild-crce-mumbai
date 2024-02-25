@@ -9,7 +9,18 @@ function FlipCard() {
   };
 
   return (
+
     <div className="wrapper">
+      <img
+        src="https://img.hotimg.com/images-removebg-preview.png"
+        alt="Image"
+        className="image"
+      />
+      <img
+        src="https://img.hotimg.com/images-removebg-preview.png"
+        alt="Image"
+        className="image2"
+      />
       <div className="card-switch">
         <label className="switch">
           <input

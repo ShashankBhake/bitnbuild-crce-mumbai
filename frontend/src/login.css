@@ -29,7 +29,7 @@
   top: 0;
   width: 100px;
   text-decoration: underline;
-  color: var(--font-color);
+  color: var(lightblue);
   font-weight: 600;
 }
 
@@ -40,9 +40,16 @@
   top: 0;
   width: 100px;
   text-decoration: none;
-  color: var(--font-color);
+  color: var(lightblue);
   font-weight: 600;
 }
+.dark-mode .card-side::before {
+  color: #fff; 
+}
+.dark-mode .card-side::after {
+  color: #fff;
+}
+
 
 .toggle {
   opacity: 0;
@@ -195,3 +202,17 @@
   color: var(--font-color);
   cursor: pointer;
 } 
+.image {
+  position: absolute;
+  top:440px;/* Adjust as needed */
+  right: 400px; /* Adjust as needed */
+  width: 100px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+.image2 {
+  position: absolute;
+  top:200px;/* Adjust as needed */
+  left: 410px; /* Adjust as needed */
+  width: 100px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
