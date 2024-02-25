@@ -1,8 +1,7 @@
-// FileUploadPage.js
 import React, { useState } from 'react';
 import { Box, Button, Center, Text, VStack } from '@chakra-ui/react';
 import axios from 'axios';
-import ReactMarkdown from 'react-markdown';
+import { FaFileUpload } from 'react-icons/fa';
 
 const FileUploadPage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -11,8 +10,6 @@ const FileUploadPage = () => {
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
-
-
 
     const handleUpload = async () => {
         if (selectedFile) {
@@ -43,16 +40,26 @@ const FileUploadPage = () => {
 
     return (
         <Center h="100vh">
-            <VStack >
-                <VStack spacing={4} p={6} borderWidth="1px" borderRadius="lg" boxShadow="xl">
+            <VStack>
+                <VStack spacing={4} p={6} borderWidth="1px" borderRadius="lg" boxShadow="lg">
                     <Text fontSize="2xl" fontWeight="bold">Document Summarizer</Text>
-                    <Box w="100%">
-                        <input type="file" onChange={handleFileChange} />
+                    <Box w="100%" borderStyle="dashed" borderWidth="2px" borderRadius="lg" p={4} borderColor="white" cursor="pointer">
+                        <label htmlFor="file-upload" className="custom-file-upload">
+                            <input id="file-upload" type="file" onChange={handleFileChange} hidden />
+                            {selectedFile ? (
+                                <Text>{selectedFile.name}</Text>
+                            ) : (
+                                <Box display="flex" flexDirection="column" alignItems="center">
+                                    <FaFileUpload size={60} />
+                                    <Text>Click to Upload File</Text>
+                                </Box>
+                            )}
+                        </label>
                     </Box>
                     <Button colorScheme="blue" onClick={handleUpload}>Upload</Button>
                 </VStack>
                 <Box w={'100%'} maxWidth={'100%'}>
-                <ReactMarkdown>{resp}</ReactMarkdown>
+                    <Text>{resp}</Text>
                 </Box>
             </VStack>
         </Center>

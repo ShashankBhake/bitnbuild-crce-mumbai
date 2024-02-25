@@ -1,0 +1,11 @@
+.custom-file-upload {
+    border: 3px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.custom-file-upload:hover {
+    background-color: #f9f9f9;
+}

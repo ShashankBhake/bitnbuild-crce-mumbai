@@ -11,11 +11,13 @@ import {
     Input,
     Stack,
     Text,
-    Box
+    Box,
+    HStack
 } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { MdMenu } from "react-icons/md";
+import { MdOutlineInventory2 } from "react-icons/md";
 
 
 function DrawerExample() {
@@ -27,8 +29,10 @@ function DrawerExample() {
     return (
         <>
             <Box padding={4}   >
+                
                 <MdMenu size={30} ref={btnRef} cursor={'pointer'} colorscheme='teal' onClick={onOpen} />
-            </Box>            <Drawer
+            </Box>           
+             <Drawer
                 isOpen={isOpen}
                 placement='left'
                 onClose={onClose}
@@ -37,7 +41,10 @@ function DrawerExample() {
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader>Create your account</DrawerHeader>
+                    <DrawerHeader>
+                    <HStack><MdOutlineInventory2/> <Text>Inventory</Text>
+                    </HStack>
+                    </DrawerHeader>
 
                     <DrawerBody>
                         {
