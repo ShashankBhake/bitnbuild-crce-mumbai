@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Sales from './pages/Sales';
 import Vendors from './pages/Vendors';
 import Inventory from './pages/Inventory';
+import Dashboard from './pages/Dashboard'
 
 function App() {
   const isDarkMode = useSelector((state) => state.ui.isDarkMode);
@@ -17,6 +18,7 @@ function App() {
           <Route path='/inventory' element={<Inventory />} />
           <Route path='/sales' element={<Sales/>}  />
           <Route path='/vendors' element={<Vendors/>}  />
+          <Route path='/dashboard' element={<Dashboard/>}  />
         </Routes>
       </BrowserRouter>
     

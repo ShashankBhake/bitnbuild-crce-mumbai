@@ -1,18 +1,17 @@
-import React from 'react'
-import TableComponent from '../components/Table'
-import { Stack } from '@chakra-ui/react'
-import Dashboard from './Dashboard'
- 
+import React from 'react';
+import { Box, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import img from '../assets/image.png';
 
 const Home = () => {
-  return (
-    <div>
-        
-   <Dashboard/>
+    return (
+        <HStack spacing={8} alignItems="center" justifyContent={'center'}>
+            <VStack>
+            <Text fontSize="3xl" fontWeight="bold" textAlign="center">Inventory Management System</Text>
+            <Text fontSize="lg" color="gray.600" textAlign="center">Efficiently organize, track, and manage your inventory</Text>
+            </VStack>
+            <Image src={img} />
+        </HStack>
+    );
+};
 
-        
-    </div>
-  )
-}
-
-export default Home
+export default Home;

@@ -75,6 +75,7 @@ const Dashboard = () => {
     const bgColor = { light: 'white', dark: 'gray.800' };
     const borderColor = { light: '#ebeaf2', dark: '#2d3748' };
     const textColor = { light: '#777777', dark: 'white' };
+    const headerColor = { light: '#777777', dark: 'black' };
     return (
         <Container p={5} maxW={'100vw'} width={'100%'} height={'100vh'}>
             <Text fontSize='4xl' fontWeight={'bold'} mb={4} color={textColor[colorMode]}  >Dashboard</Text>
@@ -95,7 +96,7 @@ const Dashboard = () => {
                                 p={2}
                                 backgroundColor={'#f9f9fb'}
                                 w={'100%'}
-                                color={textColor[colorMode]}
+                                color={headerColor[colorMode]}
                                 fontSize={'xl'}
                                 textAlign={'start'}
                                 borderTopRadius="xl"
@@ -136,7 +137,7 @@ const Dashboard = () => {
                             p={2}
                             backgroundColor={'#f9f9fb'}
                             w={'100%'}
-                            color={textColor[colorMode]}
+                            color={headerColor[colorMode]}
                             fontSize={'xl'}
                             textAlign={'start'}
                             borderTopRadius="xl"
@@ -176,7 +177,7 @@ const Dashboard = () => {
                                 p={2}
                                 backgroundColor={'#f9f9fb'}
                                 w={'100%'}
-                                color={textColor[colorMode]}
+                                color={headerColor[colorMode]}
                                 fontSize={'xl'}
                                 textAlign={'start'}
                                 borderTopRadius="xl"
@@ -223,7 +224,7 @@ const Dashboard = () => {
                             p={2}
                             backgroundColor={'#f9f9fb'}
                             w={'100%'}
-                            color={textColor[colorMode]}
+                            color={headerColor[colorMode]}
                             fontSize={'xl'}
                             textAlign={'start'}
                             borderTopRadius="xl"
