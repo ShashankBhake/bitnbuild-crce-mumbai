@@ -7,6 +7,7 @@ var cors = require("cors");
 const userModel = require("../db/models/user");
 const axios = require("axios");
 const InventoryItem = require("../db/models/inventoryitems");
+const fs = require('fs');
 
 // var allowlist = ['http://localhost:5173/', 'https://mscs.vercel.app/']
 // var corsOptionsDelegate = function (req, callback) {
@@ -31,23 +32,93 @@ myHeaders.append(
 );
 myHeaders.append("Content-Type", "application/json; charset=utf-8");
 
-router.post("/image/summarize", async (req, res) => {
+
+
+
+router.get('/document/summarize', async (req, res) => {
+    try {
+        const readFileAsBase64 = (filePath) => {
+            try {
+                const fileContent = fs.readFileSync(filePath, 'base64');
+                return fileContent;
+            } catch (err) {
+                console.error(err);
+                return null;
+            }
+        };
+
+        const filePath = '/Users/shashankhkanni/Desktop/Shashankh_Kanni.pdf';
+        const base64Content = readFileAsBase64(filePath);
+        console.log("file path", filePath, "base64", !!base64Content)
+        if (base64Content) {
+            const req = {
+                "skipHumanReview": true,
+                "rawDocument": {
+                    "mimeType": "application/pdf",
+                    "content": base64Content
+                }
+            };
+            fs.writeFileSync('request.json', JSON.stringify(req));
+            const curlCommand = `curl -X POST \
+            -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d @request.json \
+            "https://us-documentai.googleapis.com/v1/projects/951555931380/locations/us/processors/c39f0f36a0c7e879:process"`;
+            const { promisify } = require('util');
+            const exec = promisify(require('child_process').exec);
+
+            try {
+                await exec(curlCommand);
+                console.log('done');
+                return res.status(200).json({
+                    message: "Success",
+                    code: "SUCCESS",
+                });
+            } catch (error) {
+                console.error(`error: ${error.message}`);
+                return res.status(500).json({
+                    message: "Server Error",
+                    code: "FAIL",
+                    error: error.message
+                });
+            }
+
+        } else {
+            console.error("FAILED TO READ FILE");
+            return res.status(500).json({
+                message: "Error reading file",
+                code: "FAIL"
+            });
+        }
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            message: "Server Error",
+            code: "FAIL",
+            error: err
+        })
+    }
+})
+
+router.post('/image/summarize', async (req, res) => {
     try {
         const { image } = req.body;
 
         const raw = {
-            instances: [
+            "instances": [
                 {
-                    image: {
-                        bytesBase64Encoded: image,
-                    },
-                },
+                    "image": {
+                        "bytesBase64Encoded": image
+                    }
+                }
             ],
-            parameters: {
-                sampleCount: 1,
-                language: "en",
-            },
+            "parameters": {
+                "sampleCount": 1,
+                "language": "en"
+            }
         };
+
 
         const requestOptions = {
             method: "POST",
@@ -56,10 +127,7 @@ router.post("/image/summarize", async (req, res) => {
             redirect: "follow",
         };
 
-        const { response } = await axios.post(
-            "https://asia-southeast1-aiplatform.googleapis.com/v1/projects/quiet-subset-415315/locations/asia-southeast1/publishers/google/models/imagetext:predict",
-            requestOptions
-        );
+        const { response } = await axios.post("https://asia-southeast1-aiplatform.googleapis.com/v1/projects/quiet-subset-415315/locations/asia-southeast1/publishers/google/models/imagetext:predict", requestOptions)
         // fetch("https://asia-southeast1-aiplatform.googleapis.com/v1/projects/quiet-subset-415315/locations/asia-southeast1/publishers/google/models/imagetext:predict", requestOptions)
         //     .then((response) => {
         //         return res.status(200).json({

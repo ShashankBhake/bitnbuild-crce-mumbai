@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import App from './App'
 import ColorModeSwitcher from './ColorModeSwitcher'
 
-
 import './index.css'
 import { store } from './store'
 
