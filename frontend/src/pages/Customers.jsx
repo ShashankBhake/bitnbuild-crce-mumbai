@@ -14,9 +14,11 @@ import {
     TableContainer,
     Container,
     Text,
+    Spinner,
+    Center,
 } from '@chakra-ui/react'
 const CustomerTable = () => {
-
+const [loading, setLoading] = React.useState(false)
     const finalData = React.useMemo(() => {
         customersData
     }, [])
@@ -36,6 +38,19 @@ const CustomerTable = () => {
     console.log("test", tableInstance.getHeaderGroups())
 
     return (
+<>
+
+{
+    loading ? (<Center h={'80vh'} >
+    <Spinner
+      thickness='4px'
+      speed='0.65s'
+      emptyColor='gray.200'
+      color='blue.500'
+      size='xl'
+    />
+        
+    </Center>   )  : (
         <Container maxW={'100vw'} width={'100%'} height={'100vh'} >
             <Text fontSize={'2xl'} textAlign={'center'} >Customers</Text>
             <TableContainer p={10} ml={'30px'}  >
@@ -176,6 +191,12 @@ const CustomerTable = () => {
             </TableContainer>
 
         </Container>
+    )
+}
+</>
+
+
+        
     )
 }
 

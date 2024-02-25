@@ -1,7 +1,8 @@
-import { Box, Container, Divider, HStack, Text, VStack, useColorMode } from '@chakra-ui/react';
-import { CiCircleCheck } from "react-icons/ci";
 
-import React from 'react';
+import { Box, Center, Container, Divider, HStack, Spinner, Text, VStack, useColorMode } from '@chakra-ui/react'
+import { CiCircleCheck } from "react-icons/ci";
+import React, { useState } from 'react'
+
 
 
 import { ArcElement, Chart, Legend, Title, Tooltip } from 'chart.js';
@@ -51,7 +52,7 @@ const Dashboard = () => {
     ];
 
 
-
+const [loading, setLoading] = useState(false)
     const productDetails = [
         {
             quant: 22,
@@ -78,7 +79,22 @@ const Dashboard = () => {
     const textColor = { light: '#777777', dark: 'white' };
     const headerColor = { light: '#777777', dark: 'black' };
     return (
-        <Container p={5} maxW={'100vw'} width={'100%'} height={'100vh'}>
+
+<>
+
+        {
+            loading  ? (<Center h={'80vh'} >
+            <Spinner
+              thickness='4px'
+              speed='0.65s'
+              emptyColor='gray.200'
+              color='blue.500'
+              size='xl'
+            />
+                
+            </Center>    ) :
+            (
+                <Container p={5} maxW={'100vw'} width={'100%'} height={'100vh'}>
             <Text fontSize='4xl' fontWeight={'bold'} mb={4} color={textColor[colorMode]}  >Dashboard</Text>
             <VStack w={'100%'} p={2} spacing={10} alignItems="stretch">
                 <HStack spacing={10} justifyContent={'center'} >
@@ -249,6 +265,11 @@ const Dashboard = () => {
                 </HStack>
             </VStack>
         </Container>
+            )
+        }
+</>
+
+        
     );
 }
 
