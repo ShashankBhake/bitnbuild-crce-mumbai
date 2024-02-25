@@ -23,7 +23,7 @@ function DrawerExample() {
     const btnRef = React.useRef()
 
     const sidebarElements = ['Home', 'Inventory', 'Sales']
-    const sidebarElements1 = [{ component: 'Home', path: '/' }, { component: 'Inventory', path: '/inventory' }, { component: 'Sales', path: '/sales' }]
+    const sidebarElements1 = [{ component: 'Home', path: '/' }, { component: 'Inventory', path: '/inventory' }, { component: 'Sales', path: '/sales' }, { component: 'Vendors', path: '/vendors' }, { component: 'Dashboard', path: '/dashboard' }]
     return (
         <>
             <Box padding={4}   >
