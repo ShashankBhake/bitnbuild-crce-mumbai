@@ -50,7 +50,7 @@ router.post('/user/register', test, async (req, res) => {
 });
 
 
-router.get('/user/login', test, async (req, res) => {
+router.get('/user/login', async (req, res) => {
     const { username, password } = req.body
     console.log("USERNAME", username, "PASSWORD", password)
     const user = await userModel.findOne({
